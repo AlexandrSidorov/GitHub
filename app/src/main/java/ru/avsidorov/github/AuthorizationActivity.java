@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -25,6 +26,7 @@ public class AuthorizationActivity extends ActionBarActivity {
     public static final String PASSWORD = "PASSWORD";
     EditText evLogin;
     EditText evPassword;
+    ProgressBarCircularIndeterminate pbCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class AuthorizationActivity extends ActionBarActivity {
         getSupportActionBar().hide();
         evLogin = (EditText) findViewById(R.id.loginEditText);
         evPassword = (EditText) findViewById(R.id.loginEditView);
+        pbCircle = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+        pbCircle.setVisibility(View.GONE);
         if (savedInstanceState != null) {
             evLogin.setText(savedInstanceState.getString(LOGIN));
             evPassword.setText(savedInstanceState.getString(PASSWORD));
@@ -42,6 +46,7 @@ public class AuthorizationActivity extends ActionBarActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pbCircle.setVisibility(View.VISIBLE);
                 final String login = evLogin.getText().toString();
                 final String password = evPassword.getText().toString();
                 if (!login.isEmpty() && !password.isEmpty()) {
@@ -63,6 +68,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                         public void success(GHUser ghUser, Response response) {
                             Intent startIntent = new Intent(AuthorizationActivity.this,
                                     MainActivity.class);
+                            pbCircle.setVisibility(View.GONE);
                             startActivity(startIntent);
                             overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
                         }

@@ -6,6 +6,6 @@
     <string name="btn_sign_in">Войти</string>
     <string name="dialog_content_enter_login_and_password">Введите имя пользователя и пароль</string>
     <string name="dialog_error">Ошибка</string>
-    <string name="github_welcome"></string>
+    <string name="github_welcome">Welcome to GitHub</string>
     <string name="action_settings">Настройки</string>
 </resources>
