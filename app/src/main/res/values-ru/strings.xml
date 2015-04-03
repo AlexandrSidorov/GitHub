@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub</string>
+    <string name="btn_login">Имя пользователя</string>
+    <string name="btn_password">Пароь</string>
+    <string name="btn_sign_in">Войти</string>
+    <string name="dialog_content_enter_login_and_password">Введите имя пользователя и пароль</string>
+    <string name="dialog_error">Ошибка</string>
+    <string name="github_welcome"></string>
+    <string name="action_settings">Настройки</string>
+</resources>

@@ -1,10 +1,10 @@
 package ru.avsidorov.github;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,14 +21,22 @@ import ru.avsidorov.github.MODELS.GHUser;
 
 
 public class AuthorizationActivity extends ActionBarActivity {
+    public static final String LOGIN = "LOGIN";
+    public static final String PASSWORD = "PASSWORD";
+    EditText evLogin;
+    EditText evPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
         getSupportActionBar().hide();
-        final EditText evLogin = (EditText) findViewById(R.id.loginEditText);
-        final EditText evPassword = (EditText) findViewById(R.id.loginEditView);
+        evLogin = (EditText) findViewById(R.id.loginEditText);
+        evPassword = (EditText) findViewById(R.id.loginEditView);
+        if (savedInstanceState != null) {
+            evLogin.setText(savedInstanceState.getString(LOGIN));
+            evPassword.setText(savedInstanceState.getString(PASSWORD));
+        }
         Button btnLogin = (Button) findViewById(R.id.loginButton);
         final MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(this); //костыль какой-то, но контексты через getBaseContext() или getApplicationContext в OnClickListener не принимает
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -53,17 +61,23 @@ public class AuthorizationActivity extends ActionBarActivity {
                     apiGIT.getUser(login, new Callback<GHUser>() {
                         @Override
                         public void success(GHUser ghUser, Response response) {
-                            materialDialog.title("Ура").content(ghUser.getName()).show();
+                            Intent startIntent = new Intent(AuthorizationActivity.this,
+                                    MainActivity.class);
+                            startActivity(startIntent);
+                            overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            materialDialog.title("Ошибка").content(error.getLocalizedMessage()).show();
+                            materialDialog.title(R.string.dialog_error)
+                                    .content(error.getLocalizedMessage())
+                                    .positiveText(R.string.ok)
+                                    .show();
                         }
                     });
                 } else {
                     materialDialog
-                            .title(R.string.dialog_title_no_login_or_password)
+                            .title(R.string.dialog_error)
                             .content(R.string.dialog_content_enter_login_and_password)
                             .positiveText(R.string.ok)
                             .show();
@@ -74,28 +88,14 @@ public class AuthorizationActivity extends ActionBarActivity {
         });
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_authorization, menu);
-        return true;
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString(LOGIN, evLogin.getText().toString());
+        outState.putString(PASSWORD, evPassword.getText().toString());
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private String encodeCredentialsForBasicAuthorization(String login, String password) {
         final String userAndPassword = login + ":" + password;

@@ -1,5 +1,7 @@
 package ru.avsidorov.github.API;
 
+import java.util.ArrayList;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -14,5 +16,5 @@ public interface ApiGIT {
     void getUser(@Path("userName") String user_name, Callback<GHUser> ghUserCallback);
 
     @GET("users/{userName}/repos")
-    void getRepository(@Path("userName") String user_name, Callback<GHRepository> repositoryCallback);
+    ArrayList<GHRepository> getRepository(@Path("userName") String user_name, Callback<GHRepository> repositoryCallback);
 }
