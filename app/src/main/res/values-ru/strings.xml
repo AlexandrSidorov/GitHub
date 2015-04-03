@@ -2,10 +2,15 @@
 <resources>
     <string name="app_name">GitHub</string>
     <string name="btn_login">Имя пользователя</string>
-    <string name="btn_password">Пароь</string>
+    <string name="btn_password">Пароль</string>
     <string name="btn_sign_in">Войти</string>
     <string name="dialog_content_enter_login_and_password">Введите имя пользователя и пароль</string>
     <string name="dialog_error">Ошибка</string>
     <string name="github_welcome">Welcome to GitHub</string>
     <string name="action_settings">Настройки</string>
+    <string name="logout">Выход</string>
+    <string name="repository">Репозитории</string>
+    <string name="settings">Настройки</string>
+    <string name="title_activity_main">GitHub</string>
+    <string name="dialog_title_no_login_or_password" translatable="false"></string>
 </resources>

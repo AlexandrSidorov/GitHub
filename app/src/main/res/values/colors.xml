@@ -5,4 +5,9 @@
     <color name="accent">#607D8B</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#727272</color>
+
+    <color name="material_drawer_primary">#9E9E9E</color>
+    <color name="material_drawer_primary_dark">#616161</color>
+    <color name="material_drawer_primary_light">#F5F5F5</color>
+    <color name="material_drawer_accent">#607D8B</color>
 </resources>
