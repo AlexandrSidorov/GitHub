@@ -41,6 +41,12 @@ public class AuthorizationActivity extends ActionBarActivity {
                 .setLogLevel(RestAdapter.LogLevel.HEADERS).build();
     }
 
+    public static void putBase64AuthToSharePreference(SharedPreferences preferences, String base64_string) {
+        preferences.edit().putString(Constants.BASE_64, base64_string).apply();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,10 +133,8 @@ public class AuthorizationActivity extends ActionBarActivity {
         return preferences.getString(Constants.BASE_64, null);
     }
 
-    public void putBase64AuthToSharePreference(SharedPreferences preferences, String base64_string) {
-        preferences.edit().putString(Constants.BASE_64, base64_string).apply();
-
-
+    @Override
+    public void onBackPressed() {
+        finish();
     }
-
 }
