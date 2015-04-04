@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.avsidorov.github.UserFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/userPhotoFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:minHeight="96dp"
+            android:minWidth="96dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/userNameFrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/userPhotoFragment"
+            android:layout_toEndOf="@+id/userPhotoFragment"
+            android:layout_toRightOf="@+id/userPhotoFragment"
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/userEmailFrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userNameFrag"
+            android:layout_toEndOf="@+id/userPhotoFragment"
+            android:layout_toRightOf="@+id/userPhotoFragment"
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
+
+</FrameLayout>

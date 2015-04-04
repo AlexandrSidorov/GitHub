@@ -83,6 +83,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                             startActivity(startIntent);
 
                             overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
+
                         }
 
                         @Override
@@ -94,6 +95,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                         }
                     });
                 } else {
+                    pbCircle.setVisibility(View.GONE);
                     materialDialog
                             .title(R.string.dialog_error)
                             .content(R.string.dialog_content_enter_login_and_password)

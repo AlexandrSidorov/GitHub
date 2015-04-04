@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#9E9E9E</color>
-    <color name="primaryDark">#616161</color>
+    <color name="primary">#673AB7</color>
+    <color name="primaryDark">#512DA8</color>
     <color name="accent">#607D8B</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#727272</color>
+    <color name="iconColor">#FFFFFF</color>
 
-    <color name="material_drawer_primary">#9E9E9E</color>
-    <color name="material_drawer_primary_dark">#616161</color>
-    <color name="material_drawer_primary_light">#F5F5F5</color>
+    <color name="material_drawer_primary">#673AB7</color>
+    <color name="material_drawer_primary_dark">#512DA8</color>
+    <color name="material_drawer_primary_light">#D1C4E9</color>
     <color name="material_drawer_accent">#607D8B</color>
 </resources>
