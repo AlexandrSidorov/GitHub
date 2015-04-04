@@ -32,4 +32,5 @@ dependencies {
     compile('com.mikepenz.materialdrawer:library:2.7.0@aar') {
         transitive = true
     }
+    compile 'de.hdodenhof:circleimageview:1.2.2'
 }
