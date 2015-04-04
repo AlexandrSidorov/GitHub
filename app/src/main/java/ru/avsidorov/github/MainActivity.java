@@ -38,11 +38,10 @@ public class MainActivity extends ActionBarActivity {
                 .withTranslucentStatusBar(false)
                 .withActionBarDrawerToggle(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.profile).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.repository).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.settings).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.profile).withIdentifier(Constants.PROFILE),
+                        new PrimaryDrawerItem().withName(R.string.repository).withIdentifier(Constants.REPOSITORY),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(R.string.logout).withIdentifier(4)
+                        new PrimaryDrawerItem().withName(R.string.logout).withIdentifier(Constants.LOGOUT)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -53,11 +52,12 @@ public class MainActivity extends ActionBarActivity {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new UserFragment()).commit();
                                 break;
                             }
-                            case 2: {
+                            case Constants.REPOSITORY: {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new RepositoryFragment()).commit();
                                 break;
                             }
-                            case 4: {
+
+                            case Constants.LOGOUT: {
                                 AuthorizationActivity.putBase64AuthToSharePreference(getSharedPreferences(Constants.PREFERENCES, MODE_APPEND), null);
                                 startActivity(new Intent(MainActivity.this, AuthorizationActivity.class));
 

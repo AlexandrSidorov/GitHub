@@ -33,4 +33,5 @@ dependencies {
         transitive = true
     }
     compile 'de.hdodenhof:circleimageview:1.2.2'
+    compile 'com.android.support:recyclerview-v7:+'
 }
