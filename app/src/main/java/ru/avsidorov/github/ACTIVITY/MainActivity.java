@@ -1,4 +1,4 @@
-package ru.avsidorov.github;
+package ru.avsidorov.github.ACTIVITY;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +12,11 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.FRAGMENTS.RepositoryFragment;
+import ru.avsidorov.github.FRAGMENTS.UserFragment;
+import ru.avsidorov.github.R;
 
 
 public class MainActivity extends ActionBarActivity {

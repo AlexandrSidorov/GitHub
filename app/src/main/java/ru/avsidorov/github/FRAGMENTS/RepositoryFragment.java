@@ -1,4 +1,4 @@
-package ru.avsidorov.github;
+package ru.avsidorov.github.FRAGMENTS;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,7 +17,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
 import ru.avsidorov.github.Adapters.RepositoryAdapter;
-import ru.avsidorov.github.MODELS.GHRepository;
+import ru.avsidorov.github.Api;
+import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.MODELS.GHRepositoryFull;
+import ru.avsidorov.github.R;
 
 /**
  * Created by Сидоров on 03.04.2015.
@@ -27,7 +30,7 @@ public class RepositoryFragment extends Fragment {
     Toolbar toolbar_top;
     RepositoryAdapter adapter;
     ListView reposListView;
-    ArrayList<GHRepository> ghRepository;
+    ArrayList<GHRepositoryFull> ghRepository;
     ApiGIT apiGIT;
 
     @Override
@@ -45,15 +48,15 @@ public class RepositoryFragment extends Fragment {
             }
 
         } else {
-            ghRepository = new ArrayList<GHRepository>();
+            ghRepository = new ArrayList<GHRepositoryFull>();
         }
         Api api = Api.getInstance();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
 
-        apiGIT.getRepository(login, new Callback<ArrayList<GHRepository>>() {
+        apiGIT.getRepositoryFull(login, new Callback<ArrayList<GHRepositoryFull>>() {
             @Override
-            public void success(ArrayList<GHRepository> ghRepositories, Response response) {
+            public void success(ArrayList<GHRepositoryFull> ghRepositories, Response response) {
                 ghRepository.addAll(ghRepositories); // в данном случае вызывается один раз поэтому задвоения данных не будет, кнопки обновить нет
                 adapter = new RepositoryAdapter(getActivity(), R.layout.row_repos, ghRepositories);
                 reposListView.setAdapter(adapter);
@@ -76,8 +79,9 @@ public class RepositoryFragment extends Fragment {
                 commitsFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
-                        .replace(R.id.container, commitsFragment).addToBackStack("repository_stack")
+                        .replace(R.id.container, commitsFragment)
                         .commit()
+
                 ;
 
             }

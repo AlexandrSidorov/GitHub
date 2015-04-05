@@ -3,11 +3,8 @@ package ru.avsidorov.github.MODELS;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class GHCommits {
+public class GHCommit {
 
     @Expose
     private String url;
@@ -25,8 +22,7 @@ public class GHCommits {
     private Author_ author;
     @Expose
     private Committer_ committer;
-    @Expose
-    private List<Parent> parents = new ArrayList<Parent>();
+
 
     /**
      * @return The url
@@ -42,7 +38,7 @@ public class GHCommits {
         this.url = url;
     }
 
-    public GHCommits withUrl(String url) {
+    public GHCommit withUrl(String url) {
         this.url = url;
         return this;
     }
@@ -61,7 +57,7 @@ public class GHCommits {
         this.sha = sha;
     }
 
-    public GHCommits withSha(String sha) {
+    public GHCommit withSha(String sha) {
         this.sha = sha;
         return this;
     }
@@ -80,7 +76,7 @@ public class GHCommits {
         this.htmlUrl = htmlUrl;
     }
 
-    public GHCommits withHtmlUrl(String htmlUrl) {
+    public GHCommit withHtmlUrl(String htmlUrl) {
         this.htmlUrl = htmlUrl;
         return this;
     }
@@ -99,7 +95,7 @@ public class GHCommits {
         this.commentsUrl = commentsUrl;
     }
 
-    public GHCommits withCommentsUrl(String commentsUrl) {
+    public GHCommit withCommentsUrl(String commentsUrl) {
         this.commentsUrl = commentsUrl;
         return this;
     }
@@ -118,7 +114,7 @@ public class GHCommits {
         this.commit = commit;
     }
 
-    public GHCommits withCommit(Commit commit) {
+    public GHCommit withCommit(Commit commit) {
         this.commit = commit;
         return this;
     }
@@ -137,7 +133,7 @@ public class GHCommits {
         this.author = author;
     }
 
-    public GHCommits withAuthor(Author_ author) {
+    public GHCommit withAuthor(Author_ author) {
         this.author = author;
         return this;
     }
@@ -156,27 +152,8 @@ public class GHCommits {
         this.committer = committer;
     }
 
-    public GHCommits withCommitter(Committer_ committer) {
+    public GHCommit withCommitter(Committer_ committer) {
         this.committer = committer;
-        return this;
-    }
-
-    /**
-     * @return The parents
-     */
-    public List<Parent> getParents() {
-        return parents;
-    }
-
-    /**
-     * @param parents The parents
-     */
-    public void setParents(List<Parent> parents) {
-        this.parents = parents;
-    }
-
-    public GHCommits withParents(List<Parent> parents) {
-        this.parents = parents;
         return this;
     }
 

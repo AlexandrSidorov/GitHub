@@ -1,4 +1,4 @@
-package ru.avsidorov.github;
+package ru.avsidorov.github.FRAGMENTS;
 
 
 import android.app.Activity;
@@ -17,16 +17,19 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
+import ru.avsidorov.github.Api;
+import ru.avsidorov.github.Constants;
 import ru.avsidorov.github.MODELS.GHUser;
+import ru.avsidorov.github.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class UserFragment extends android.support.v4.app.Fragment {
-    ImageView imageView;
-    TextView textView;
-    TextView textView2;
+    ImageView avatarImageView;
+    TextView userName;
+    TextView userEmail;
 
     ProgressBarCircularIndeterminate pbCircle;
 
@@ -36,20 +39,11 @@ public class UserFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        imageView = (ImageView) view.findViewById(R.id.userPhotoFragment);
-        textView = (TextView) view.findViewById(R.id.userNameFrag);
-        textView2 = (TextView) view.findViewById(R.id.userEmailFrag);
-
-        return view;
-
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        pbCircle.setVisibility(View.GONE);
-
+        avatarImageView = (ImageView) view.findViewById(R.id.userPhotoFragment);
+        pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircular);
+        userName = (TextView) view.findViewById(R.id.userNameFrag);
+        userEmail = (TextView) view.findViewById(R.id.userEmailFrag);
+        //  pbCircle.setVisibility(View.VISIBLE);
         Api api = Api.getInstance();
         ApiGIT apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
@@ -57,9 +51,10 @@ public class UserFragment extends android.support.v4.app.Fragment {
         apiGIT.getUser(login, new Callback<GHUser>() {
             @Override
             public void success(GHUser ghUser, Response response) {
-                Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(imageView);
-                textView.setText(ghUser.getName());
-                textView2.setText(ghUser.getCompany());
+                Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(avatarImageView);
+                userName.setText(ghUser.getName());
+                userEmail.setText(ghUser.getEmail());
+                // pbCircle.setVisibility(View.INVISIBLE);
 
 
             }
@@ -67,9 +62,13 @@ public class UserFragment extends android.support.v4.app.Fragment {
             @Override
             public void failure(RetrofitError error) {
 
+
             }
         });
+        return view;
+
 
     }
+
 
 }

@@ -12,17 +12,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import ru.avsidorov.github.MODELS.GHRepositoryFull;
+import ru.avsidorov.github.MODELS.GHCommit;
 import ru.avsidorov.github.R;
 
 /**
  * Created by Сидоров on 05.04.2015.
  */
-public class RepositoryAdapter extends ArrayAdapter<GHRepositoryFull> {
-    Context context;
-
-    public RepositoryAdapter(Context cont, int resource, ArrayList<GHRepositoryFull> objects) {
-        super(cont, resource, objects);
+public class CommitsAdapter extends ArrayAdapter<GHCommit> {
+    public CommitsAdapter(Context context, int resource, ArrayList<GHCommit> objects) {
+        super(context, resource, objects);
     }
 
     @Override
@@ -35,30 +33,40 @@ public class RepositoryAdapter extends ArrayAdapter<GHRepositoryFull> {
             rowView = LayoutInflater.from(getContext()).inflate(R.layout.row_repos, parent, false);
             holder = new ViewHolder();
             holder.name = (TextView) rowView.findViewById(R.id.comit_descriptionTextView);
-            holder.description = (TextView) rowView.findViewById(R.id.authorTextView);
-            holder.authorAvatar = (ImageView) rowView.findViewById(R.id.repoLogoImageView);
+            holder.commitsDescription = (TextView) rowView.findViewById(R.id.authorTextView);
+            holder.sha = (TextView) rowView.findViewById(R.id.shaTextView);
+            holder.date = (TextView) rowView.findViewById(R.id.dateTextView);
+            holder.authorAvatar = (ImageView) rowView.findViewById(R.id.avatarAuthorImageView);
+
             rowView.setTag(holder);
 
         } else {
             holder = (ViewHolder) rowView.getTag();
         }
-        final GHRepositoryFull repository = (GHRepositoryFull) getItem(position);
+        final GHCommit commits = (GHCommit) getItem(position);
 
 
-        holder.name.setText(repository.getFullName());
-        holder.description.setText(repository.getDescription());
+        holder.name.setText(commits.getAuthor().getAvatarUrl());
+        holder.commitsDescription.setText(commits.getCommit().getMessage());
+        holder.sha.setText(commits.getSha());
+        holder.date.setText(commits.getCommit().getAuthor().getDate());
         Picasso.with(getContext())
-                .load(repository.getOwner().getAvatarUrl())
+                .load(commits.getAuthor().getAvatarUrl())
                 .fit()
                 .centerInside()
                 .into(holder.authorAvatar);
+
+
         return rowView;
     }
 
     static class ViewHolder {
         TextView name;
-        TextView description;
+        TextView commitsDescription;
+        TextView sha;
+        TextView date;
         ImageView authorAvatar;
+
 
     }
 }

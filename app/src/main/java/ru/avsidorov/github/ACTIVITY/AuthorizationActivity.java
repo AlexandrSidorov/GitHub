@@ -1,4 +1,4 @@
-package ru.avsidorov.github;
+package ru.avsidorov.github.ACTIVITY;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +19,9 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
+import ru.avsidorov.github.Constants;
 import ru.avsidorov.github.MODELS.GHUser;
+import ru.avsidorov.github.R;
 
 
 public class AuthorizationActivity extends ActionBarActivity {
@@ -101,7 +103,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                         }
                     });
                 } else {
-                    pbCircle.setVisibility(View.GONE);
+                    pbCircle.setVisibility(View.INVISIBLE);
                     materialDialog
                             .title(R.string.dialog_error)
                             .content(R.string.dialog_content_enter_login_and_password)
