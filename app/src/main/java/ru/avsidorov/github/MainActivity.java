@@ -49,11 +49,11 @@ public class MainActivity extends ActionBarActivity {
                         // do something with the clicked item :D
                         switch (drawerItem.getIdentifier()) {
                             case 1: {
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container, new UserFragment()).commit();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_from, R.anim.activity_to).replace(R.id.container, new UserFragment()).commit();
                                 break;
                             }
                             case Constants.REPOSITORY: {
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container, new RepositoryFragment()).commit();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_from, R.anim.activity_to).replace(R.id.container, new RepositoryFragment()).commit();
                                 break;
                             }
 
