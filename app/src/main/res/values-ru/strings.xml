@@ -12,6 +12,6 @@
     <string name="repository">Репозитории</string>
     <string name="settings">Настройки</string>
     <string name="title_activity_main">GitHub</string>
-    <string name="dialog_title_no_login_or_password" translatable="false"></string>
+
     <string name="profile">Профиль</string>
 </resources>

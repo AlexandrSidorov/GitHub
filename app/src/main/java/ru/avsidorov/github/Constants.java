@@ -15,4 +15,5 @@ public class Constants {
     public static final int PROFILE = 1;
     public static final int REPOSITORY = 2;
     public static final int LOGOUT = 3;
+    public static final String REP_NAME = "rep_name";
 }

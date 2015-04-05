@@ -14,8 +14,6 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.squareup.picasso.Picasso;
 
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
@@ -51,8 +49,9 @@ public class UserFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        pbCircle.setVisibility(View.GONE);
-        RestAdapter restAdapter = getRestAdapter();
-        ApiGIT apiGIT = restAdapter.create(ApiGIT.class);
+
+        Api api = Api.getInstance();
+        ApiGIT apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
 
         apiGIT.getUser(login, new Callback<GHUser>() {
@@ -73,18 +72,4 @@ public class UserFragment extends android.support.v4.app.Fragment {
 
     }
 
-    private RestAdapter getRestAdapter() {
-        return new RestAdapter.Builder()
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade request) {
-                        String base64 = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.BASE_64, null);
-
-                        request.addHeader("Authorization", base64);
-
-                    }
-                })
-                .setEndpoint(Constants.ENDPOINT)
-                .setLogLevel(RestAdapter.LogLevel.HEADERS).build();
-    }
 }

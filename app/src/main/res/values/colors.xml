@@ -5,7 +5,7 @@
     <color name="accent">#607D8B</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#727272</color>
-    <color name="iconColor">#FFFFFF</color>
+    <color name="whiteColor">#FFFFFF</color>
 
     <color name="material_drawer_primary">#673AB7</color>
     <color name="material_drawer_primary_dark">#512DA8</color>

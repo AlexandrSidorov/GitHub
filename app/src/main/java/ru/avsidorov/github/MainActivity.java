@@ -1,6 +1,5 @@
 package ru.avsidorov.github;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,24 +13,18 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import ru.avsidorov.github.MODELS.GHUser;
-
 
 public class MainActivity extends ActionBarActivity {
-    GHUser user;
-    RepositoryFragment repositoryFragment = new RepositoryFragment();
+    UserFragment userFragment;
+    RepositoryFragment repositoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /**AccountHeader.Result headerResult = new AccountHeader()
-         .withActivity(MainActivity.this)
-         .build();*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-//Now create your drawer and pass the AccountHeader.Result
         Drawer.Result result = new Drawer()
                 .withActivity(MainActivity.this)
                 .withToolbar(toolbar)
@@ -46,21 +39,22 @@ public class MainActivity extends ActionBarActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
+
                         switch (drawerItem.getIdentifier()) {
-                            case 1: {
-                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_from, R.anim.activity_to).replace(R.id.container, new UserFragment()).commit();
+                            case Constants.PROFILE: {
+                                userFragment = new UserFragment();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_to, R.anim.activity_from).replace(R.id.container, userFragment).commit();
                                 break;
                             }
                             case Constants.REPOSITORY: {
-                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_from, R.anim.activity_to).replace(R.id.container, new RepositoryFragment()).commit();
+                                repositoryFragment = new RepositoryFragment();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_to, R.anim.activity_from).replace(R.id.container, repositoryFragment).addToBackStack("repository_stack").commit();
                                 break;
                             }
 
                             case Constants.LOGOUT: {
                                 AuthorizationActivity.putBase64AuthToSharePreference(getSharedPreferences(Constants.PREFERENCES, MODE_APPEND), null);
-                                startActivity(new Intent(MainActivity.this, AuthorizationActivity.class));
-
+                                finish();
                             }
                         }
                     }
@@ -79,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
     }
 
     @Override
@@ -91,12 +85,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
