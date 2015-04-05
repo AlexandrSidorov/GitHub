@@ -16,6 +16,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
+import ru.avsidorov.github.Adapters.CommitsAdapter;
 import ru.avsidorov.github.Api;
 import ru.avsidorov.github.Constants;
 import ru.avsidorov.github.MODELS.GHCommit;
@@ -29,6 +30,7 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
     Toolbar toolbar_top;
     ListView commitsListView;
     ApiGIT apiGIT;
+    CommitsAdapter adapter;
 
     public CommitsFragment() {
         // Required empty public constructor
@@ -45,13 +47,15 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
         Api api = Api.getInstance();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         final String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-        //TODO Не работает каст в ArrayList, видимо не может работать с вложенными классами в модели
+
 
         //ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));
         apiGIT.getCommits(login, getArguments().getString(Constants.REP_NAME), new Callback<ArrayList<GHCommit>>() {
             @Override
             public void success(ArrayList<GHCommit> ghCommits, Response response) {
-
+                //TODO Не работает, надо разобраться
+                adapter = new CommitsAdapter(getActivity(), R.layout.row_repos, ghCommits);
+                commitsListView.setAdapter(adapter);
             }
 
             @Override

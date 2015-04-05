@@ -51,6 +51,7 @@ public class RepositoryAdapter extends ArrayAdapter<GHRepositoryFull> {
                 .load(repository.getOwner().getAvatarUrl())
                 .fit()
                 .centerInside()
+                .placeholder(R.drawable.github_48)
                 .into(holder.authorAvatar);
         return rowView;
     }
