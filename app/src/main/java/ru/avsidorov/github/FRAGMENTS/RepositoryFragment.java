@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+
 import java.util.ArrayList;
 
 import retrofit.Callback;
@@ -32,12 +34,13 @@ public class RepositoryFragment extends Fragment {
     ListView reposListView;
     ArrayList<GHRepositoryFull> ghRepository;
     ApiGIT apiGIT;
+    ProgressBarCircularIndeterminate pbCircle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_repository, container, false);
-
+        pbCircle = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularRepository);
         toolbar_top = (Toolbar) rootView.findViewById(R.id.toolbar_top);
         toolbar_top.setTitle(R.string.repository);
         reposListView = (ListView) rootView.findViewById(R.id.repositoryListView);
@@ -50,23 +53,23 @@ public class RepositoryFragment extends Fragment {
         } else {
             ghRepository = new ArrayList<GHRepositoryFull>();
         }
-        Api api = Api.getInstance();
+        Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-
+        pbCircle.setVisibility(View.VISIBLE);
         apiGIT.getRepositoryFull(login, new Callback<ArrayList<GHRepositoryFull>>() {
             @Override
             public void success(ArrayList<GHRepositoryFull> ghRepositories, Response response) {
                 ghRepository.addAll(ghRepositories); // в данном случае вызывается один раз поэтому задвоения данных не будет, кнопки обновить нет
                 adapter = new RepositoryAdapter(getActivity(), R.layout.row_repos, ghRepositories);
                 reposListView.setAdapter(adapter);
-
+                pbCircle.setVisibility(View.INVISIBLE);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                pbCircle.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -77,9 +80,11 @@ public class RepositoryFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.REP_NAME, ghRepository.get(position).getName());
                 commitsFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction()
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
                         .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
                         .replace(R.id.container, commitsFragment)
+                        .addToBackStack(Constants.REP_NAME)
                         .commit()
 
                 ;

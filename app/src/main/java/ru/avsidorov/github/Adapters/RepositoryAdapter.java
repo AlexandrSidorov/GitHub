@@ -36,6 +36,8 @@ public class RepositoryAdapter extends ArrayAdapter<GHRepositoryFull> {
             holder = new ViewHolder();
             holder.name = (TextView) rowView.findViewById(R.id.comit_descriptionTextView);
             holder.description = (TextView) rowView.findViewById(R.id.authorTextView);
+            holder.forks = (TextView) rowView.findViewById(R.id.forksTextView);
+            holder.watches = (TextView) rowView.findViewById(R.id.watchesTextView);
             holder.authorAvatar = (ImageView) rowView.findViewById(R.id.repoLogoImageView);
             rowView.setTag(holder);
 
@@ -45,20 +47,24 @@ public class RepositoryAdapter extends ArrayAdapter<GHRepositoryFull> {
         final GHRepositoryFull repository = (GHRepositoryFull) getItem(position);
 
 
-        holder.name.setText(repository.getFullName());
-        holder.description.setText(repository.getDescription());
         Picasso.with(getContext())
                 .load(repository.getOwner().getAvatarUrl())
                 .fit()
                 .centerInside()
                 .placeholder(R.drawable.github_48)
                 .into(holder.authorAvatar);
+        holder.name.setText(repository.getFullName());
+        holder.description.setText(repository.getDescription());
+        holder.forks.setText(repository.getForksCount().toString());
+        holder.watches.setText(repository.getWatchersCount().toString());
         return rowView;
     }
 
     static class ViewHolder {
         TextView name;
         TextView description;
+        TextView forks;
+        TextView watches;
         ImageView authorAvatar;
 
     }

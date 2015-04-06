@@ -21,9 +21,11 @@
         android:id="@+id/comit_descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/repoLogoImageView"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/repoLogoImageView"
+        android:layout_alignLeft="@+id/authorTextView"
+        android:layout_alignStart="@+id/authorTextView"
+        android:layout_alignTop="@+id/avatarAuthorImageView"
+        android:layout_toLeftOf="@+id/shaTextView"
+        android:layout_toStartOf="@+id/shaTextView"
         android:text="sdfsdfsdf"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -31,10 +33,14 @@
         android:id="@+id/authorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/comit_descriptionTextView"
-        android:layout_alignStart="@+id/comit_descriptionTextView"
+        android:layout_alignParentLeft="false"
         android:layout_below="@+id/comit_descriptionTextView"
-        android:maxLines="1"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/dateTextView"
+        android:layout_toRightOf="@+id/avatarAuthorImageView"
+        android:layout_toStartOf="@+id/dateTextView"
+        android:maxLines="2"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -52,10 +58,13 @@
         android:id="@+id/shaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/comit_descriptionTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/dateTextView"
+        android:layout_alignParentLeft="false"
+        android:layout_alignStart="@+id/dateTextView"
+        android:layout_alignTop="@+id/comit_descriptionTextView"
+        android:gravity="right"
         android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
 </RelativeLayout>

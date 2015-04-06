@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+
 import java.util.ArrayList;
 
 import retrofit.Callback;
@@ -31,6 +33,7 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
     ListView commitsListView;
     ApiGIT apiGIT;
     CommitsAdapter adapter;
+    ProgressBarCircularIndeterminate pbCircle;
 
     public CommitsFragment() {
         // Required empty public constructor
@@ -44,23 +47,25 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
         toolbar_top = (Toolbar) rootView.findViewById(R.id.toolbar_top);
         toolbar_top.setTitle(R.string.commits);
         commitsListView = (ListView) rootView.findViewById(R.id.commitsListView);
-        Api api = Api.getInstance();
+        Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         final String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-
+        pbCircle = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularCommits);
+        pbCircle.setVisibility(View.VISIBLE);
 
         //ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));
         apiGIT.getCommits(login, getArguments().getString(Constants.REP_NAME), new Callback<ArrayList<GHCommit>>() {
             @Override
             public void success(ArrayList<GHCommit> ghCommits, Response response) {
-                //TODO Не работает, надо разобраться
+
                 adapter = new CommitsAdapter(getActivity(), R.layout.row_repos, ghCommits);
                 commitsListView.setAdapter(adapter);
+                pbCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                pbCircle.setVisibility(View.INVISIBLE);
             }
         });
         // ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));

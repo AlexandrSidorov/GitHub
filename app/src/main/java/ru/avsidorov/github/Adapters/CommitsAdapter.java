@@ -30,7 +30,7 @@ public class CommitsAdapter extends ArrayAdapter<GHCommit> {
 
         View rowView = convertView;
         if (rowView == null) {
-            rowView = LayoutInflater.from(getContext()).inflate(R.layout.row_repos, parent, false);
+            rowView = LayoutInflater.from(getContext()).inflate(R.layout.row_commit, parent, false);
             holder = new ViewHolder();
             holder.name = (TextView) rowView.findViewById(R.id.comit_descriptionTextView);
             holder.commitsDescription = (TextView) rowView.findViewById(R.id.authorTextView);
@@ -45,13 +45,14 @@ public class CommitsAdapter extends ArrayAdapter<GHCommit> {
         }
         final GHCommit commits = (GHCommit) getItem(position);
 
-
-        holder.name.setText(commits.getAuthor().getAvatarUrl());
+        holder.date.setText(commits.getCommit().getAuthor().getDate());//TODO Сделать преобразование строки в удобоваримый вид
+        holder.name.setText(commits.getCommit().getAuthor().getName());
         holder.commitsDescription.setText(commits.getCommit().getMessage());
-        holder.sha.setText(commits.getSha());
-        holder.date.setText(commits.getCommit().getAuthor().getDate());
+        holder.sha.setText(commits.getSha().substring(0, 5));
+
         Picasso.with(getContext())
                 .load(commits.getAuthor().getAvatarUrl())
+                .placeholder(R.drawable.github_48)
                 .fit()
                 .centerInside()
                 .into(holder.authorAvatar);

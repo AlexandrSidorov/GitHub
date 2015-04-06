@@ -3,8 +3,6 @@ package ru.avsidorov.github.ACTIVITY;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -48,12 +46,20 @@ public class MainActivity extends ActionBarActivity {
                         switch (drawerItem.getIdentifier()) {
                             case Constants.PROFILE: {
                                 userFragment = new UserFragment();
-                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_to, R.anim.activity_from).replace(R.id.container, userFragment).commit();
+                                getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
+                                        .replace(R.id.container, userFragment)
+                                        .addToBackStack(Constants.REP_NAME)
+                                        .commit();
                                 break;
                             }
                             case Constants.REPOSITORY: {
                                 repositoryFragment = new RepositoryFragment();
-                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.activity_to, R.anim.activity_from).replace(R.id.container, repositoryFragment).addToBackStack("repository_stack").commit();
+                                getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
+                                        .replace(R.id.container, repositoryFragment)
+                                        .addToBackStack(Constants.REP_NAME)
+                                        .commit();
                                 break;
                             }
 
@@ -79,25 +85,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 

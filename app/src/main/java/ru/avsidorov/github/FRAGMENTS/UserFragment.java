@@ -41,20 +41,21 @@ public class UserFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         avatarImageView = (ImageView) view.findViewById(R.id.userPhotoFragment);
         pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircular);
+        pbCircle.setVisibility(View.INVISIBLE);
         userName = (TextView) view.findViewById(R.id.userNameFrag);
         userEmail = (TextView) view.findViewById(R.id.userEmailFrag);
-        //  pbCircle.setVisibility(View.VISIBLE);
-        Api api = Api.getInstance();
+
+        Api api = new Api();
         ApiGIT apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-
+        pbCircle.setVisibility(View.VISIBLE);
         apiGIT.getUser(login, new Callback<GHUser>() {
             @Override
             public void success(GHUser ghUser, Response response) {
                 Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(avatarImageView);
                 userName.setText(ghUser.getName());
                 userEmail.setText(ghUser.getEmail());
-                // pbCircle.setVisibility(View.INVISIBLE);
+                pbCircle.setVisibility(View.INVISIBLE);
 
 
             }
