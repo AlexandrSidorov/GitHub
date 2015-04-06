@@ -30,49 +30,49 @@ import ru.avsidorov.github.R;
  */
 public class RepositoryFragment extends Fragment {
 
-    Toolbar toolbar_top;
-    RepositoryAdapter adapter;
-    ListView reposListView;
-    ArrayList<GHRepositoryFull> ghRepository;
+    Toolbar mToolbarTop;
+    RepositoryAdapter mRepositoryAdapter;
+    ListView mRepositoryListView;
+    ArrayList<GHRepositoryFull> mRepositoryArrayList;
     ApiGIT apiGIT;
-    ProgressBarCircularIndeterminate pbCircle;
+    ProgressBarCircularIndeterminate mCircleProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repository, container, false);
-        pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircularRepository);
-        toolbar_top = (Toolbar) view.findViewById(R.id.toolbar_top);
-        toolbar_top.setTitle(R.string.repository);
-        reposListView = (ListView) view.findViewById(R.id.repositoryListView);
-        ghRepository = new ArrayList<GHRepositoryFull>();
+        mCircleProgressBar = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircularRepository);
+        mToolbarTop = (Toolbar) view.findViewById(R.id.toolbar_top);
+        mToolbarTop.setTitle(R.string.repository);
+        mRepositoryListView = (ListView) view.findViewById(R.id.repositoryListView);
+        mRepositoryArrayList = new ArrayList<GHRepositoryFull>();
         Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-        pbCircle.setVisibility(View.VISIBLE);
+        mCircleProgressBar.setVisibility(View.VISIBLE);
         apiGIT.getRepositoryFull(login, new Callback<ArrayList<GHRepositoryFull>>() {
             @Override
             public void success(ArrayList<GHRepositoryFull> ghRepositories, Response response) {
-                ghRepository.addAll(ghRepositories); // в данном случае вызывается один раз поэтому задвоения данных не будет, кнопки обновить нет
-                adapter = new RepositoryAdapter(getActivity(), R.layout.row_repos, ghRepositories);
-                reposListView.setAdapter(adapter);
-                pbCircle.setVisibility(View.INVISIBLE);
+                mRepositoryArrayList.addAll(ghRepositories); // в данном случае вызывается один раз поэтому задвоения данных не будет, кнопки обновить нет
+                mRepositoryAdapter = new RepositoryAdapter(getActivity(), R.layout.row_repos, ghRepositories);
+                mRepositoryListView.setAdapter(mRepositoryAdapter);
+                mCircleProgressBar.setVisibility(View.INVISIBLE);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Dialogs.showDialog(getActivity(), error);
-                pbCircle.setVisibility(View.INVISIBLE);
+                mCircleProgressBar.setVisibility(View.INVISIBLE);
             }
 
         });
-        reposListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mRepositoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CommitsFragment commitsFragment = new CommitsFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(Constants.REP_NAME, ghRepository.get(position).getName());
+                bundle.putString(Constants.REP_NAME, mRepositoryArrayList.get(position).getName());
                 commitsFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()

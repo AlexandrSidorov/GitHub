@@ -18,8 +18,8 @@ import ru.avsidorov.github.R;
 
 
 public class MainActivity extends ActionBarActivity {
-    UserFragment userFragment;
-    RepositoryFragment repositoryFragment;
+    UserFragment mUserFragment;
+    RepositoryFragment mRepositoryFragment;
 
 
     @Override
@@ -46,20 +46,20 @@ public class MainActivity extends ActionBarActivity {
 
                         switch (drawerItem.getIdentifier()) {
                             case Constants.PROFILE: {
-                                userFragment = new UserFragment();
+                                mUserFragment = new UserFragment();
 
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
-                                        .replace(R.id.container, userFragment)
+                                        .replace(R.id.container, mUserFragment)
                                         .addToBackStack(Constants.REP_NAME)
                                         .commit();
                                 break;
                             }
                             case Constants.REPOSITORY: {
-                                repositoryFragment = new RepositoryFragment();
+                                mRepositoryFragment = new RepositoryFragment();
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
-                                        .replace(R.id.container, repositoryFragment)
+                                        .replace(R.id.container, mRepositoryFragment)
                                         .addToBackStack(Constants.REP_NAME)
                                         .commit();
                                 break;

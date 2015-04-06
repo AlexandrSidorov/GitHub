@@ -28,15 +28,15 @@ import ru.avsidorov.github.R;
  * A simple {@link Fragment} subclass.
  */
 public class UserFragment extends android.support.v4.app.Fragment {
-    ImageView avatarImageView;
-    TextView userName;
-    TextView userEmail;
-    TextView followerCount;
-    TextView publicRepoCount;
-    TextView followingCount;
-    TextView location;
+    ImageView mAvatar;
+    TextView mName;
+    TextView mEmail;
+    TextView mFollowers;
+    TextView mPublicRepositories;
+    TextView mFollowing;
+    TextView mLocation;
 
-    ProgressBarCircularIndeterminate pbCircle;
+    ProgressBarCircularIndeterminate mCircleProgressBar;
 
 
     @Override
@@ -46,35 +46,35 @@ public class UserFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
 
-        avatarImageView = (ImageView) view.findViewById(R.id.userPhotoFragment);
-        pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircular);
-        pbCircle.setVisibility(View.INVISIBLE);
-        userName = (TextView) view.findViewById(R.id.userNameFrag);
-        userEmail = (TextView) view.findViewById(R.id.userEmailFrag);
-        followerCount = (TextView) view.findViewById(R.id.followersCountTextView);
-        followingCount = (TextView) view.findViewById(R.id.followingCountTextView);
-        publicRepoCount = (TextView) view.findViewById(R.id.publicRepoCountTextView);
-        location = (TextView) view.findViewById(R.id.locationTextView);
+        mAvatar = (ImageView) view.findViewById(R.id.userPhotoFragment);
+        mCircleProgressBar = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircular);
+        mCircleProgressBar.setVisibility(View.INVISIBLE);
+        mName = (TextView) view.findViewById(R.id.userNameFrag);
+        mEmail = (TextView) view.findViewById(R.id.userEmailFrag);
+        mFollowers = (TextView) view.findViewById(R.id.followersCountTextView);
+        mFollowing = (TextView) view.findViewById(R.id.followingCountTextView);
+        mPublicRepositories = (TextView) view.findViewById(R.id.publicRepoCountTextView);
+        mLocation = (TextView) view.findViewById(R.id.locationTextView);
 
 
         Api api = new Api();
         ApiGIT apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-        pbCircle.setVisibility(View.VISIBLE);
+        mCircleProgressBar.setVisibility(View.VISIBLE);
         apiGIT.getUser(login, new Callback<GHUser>() {
             @Override
             public void success(GHUser ghUser, Response response) {
-                Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(avatarImageView);
-                userName.setText(ghUser.getName());
+                Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(mAvatar);
+                mName.setText(ghUser.getName());
                 if (ghUser.getEmail().isEmpty()) {
-                    userEmail.setText(R.string.noemail);
-                } else userEmail.setText(ghUser.getEmail());
+                    mEmail.setText(R.string.noemail);
+                } else mEmail.setText(ghUser.getEmail());
 
-                followerCount.setText(String.valueOf(ghUser.getFollowers()));
-                followingCount.setText(String.valueOf(ghUser.getFollowing()));
-                publicRepoCount.setText(String.valueOf(ghUser.getPublicRepos()));
-                location.setText(ghUser.getLocation());
-                pbCircle.setVisibility(View.INVISIBLE);
+                mFollowers.setText(String.valueOf(ghUser.getFollowers()));
+                mFollowing.setText(String.valueOf(ghUser.getFollowing()));
+                mPublicRepositories.setText(String.valueOf(ghUser.getPublicRepos()));
+                mLocation.setText(ghUser.getLocation());
+                mCircleProgressBar.setVisibility(View.INVISIBLE);
 
 
             }
@@ -82,7 +82,7 @@ public class UserFragment extends android.support.v4.app.Fragment {
             @Override
             public void failure(RetrofitError error) {
                 Dialogs.showDialog(getActivity(), error);
-                pbCircle.setVisibility(View.INVISIBLE);
+                mCircleProgressBar.setVisibility(View.INVISIBLE);
 
             }
         });

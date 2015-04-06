@@ -25,9 +25,9 @@ import ru.avsidorov.github.R;
 
 
 public class AuthorizationActivity extends ActionBarActivity {
-    EditText evLogin;
-    EditText evPassword;
-    ProgressBarCircularIndeterminate pbCircle;
+    EditText mLogin;
+    EditText mPassword;
+    ProgressBarCircularIndeterminate mCircleProgressBar;
 
     public static RestAdapter getRestAdapterBasicAuth(final String base64) {
         return new RestAdapter.Builder()
@@ -60,19 +60,19 @@ public class AuthorizationActivity extends ActionBarActivity {
             overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
         }
 
-        evLogin = (EditText) findViewById(R.id.loginEditText);
-        evPassword = (EditText) findViewById(R.id.loginEditView);
-        pbCircle = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
-        pbCircle.setVisibility(View.GONE);
+        mLogin = (EditText) findViewById(R.id.loginEditText);
+        mPassword = (EditText) findViewById(R.id.loginEditView);
+        mCircleProgressBar = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+        mCircleProgressBar.setVisibility(View.GONE);
 
         Button btnLogin = (Button) findViewById(R.id.loginButton);
         final MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(this); //костыль какой-то, но контексты через getBaseContext() или getApplicationContext в OnClickListener не принимает
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pbCircle.setVisibility(View.VISIBLE);
-                final String login = evLogin.getText().toString();
-                String password = evPassword.getText().toString();
+                mCircleProgressBar.setVisibility(View.VISIBLE);
+                final String login = mLogin.getText().toString();
+                String password = mPassword.getText().toString();
                 if (!login.isEmpty() && !password.isEmpty()) {
                     final String encode = encodeCredentialsForBasicAuthorization(login, password);
                     RestAdapter restAdapter = getRestAdapterBasicAuth(encode); //Используется Basic авторизация
@@ -84,7 +84,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                                     MainActivity.class);
                             putBase64AuthToSharePreference(getSharedPreferences(Constants.PREFERENCES, MODE_APPEND), encode);
                             getSharedPreferences(Constants.PREFERENCES, MODE_APPEND).edit().putString(Constants.USER_NAME, login).apply();
-                            pbCircle.setVisibility(View.GONE);
+                            mCircleProgressBar.setVisibility(View.GONE);
                             startActivity(startIntent);
 
                             overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
@@ -100,7 +100,7 @@ public class AuthorizationActivity extends ActionBarActivity {
                         }
                     });
                 } else {
-                    pbCircle.setVisibility(View.INVISIBLE);
+                    mCircleProgressBar.setVisibility(View.INVISIBLE);
                     materialDialog
                             .title(R.string.dialog_error)
                             .content(R.string.dialog_content_enter_login_and_password)
