@@ -148,7 +148,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:singleLine="false"
-                        android:text="24"
+                        android:text="0"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="48sp" />
                 </RelativeLayout>
@@ -178,7 +178,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:singleLine="false"
-                        android:text="25"
+                        android:text="0"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="48sp" />
                 </RelativeLayout>
@@ -207,7 +207,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:singleLine="false"
-                        android:text="24"
+                        android:text="0"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="48dp" />
                 </RelativeLayout>

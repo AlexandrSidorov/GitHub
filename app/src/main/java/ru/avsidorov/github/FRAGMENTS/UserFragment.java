@@ -42,8 +42,10 @@ public class UserFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+
         avatarImageView = (ImageView) view.findViewById(R.id.userPhotoFragment);
         pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircular);
         pbCircle.setVisibility(View.INVISIBLE);

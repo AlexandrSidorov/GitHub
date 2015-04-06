@@ -40,11 +40,11 @@ public class RepositoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_repository, container, false);
-        pbCircle = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularRepository);
-        toolbar_top = (Toolbar) rootView.findViewById(R.id.toolbar_top);
+        View view = inflater.inflate(R.layout.fragment_repository, container, false);
+        pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircularRepository);
+        toolbar_top = (Toolbar) view.findViewById(R.id.toolbar_top);
         toolbar_top.setTitle(R.string.repository);
-        reposListView = (ListView) rootView.findViewById(R.id.repositoryListView);
+        reposListView = (ListView) view.findViewById(R.id.repositoryListView);
         ghRepository = new ArrayList<GHRepositoryFull>();
         Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
@@ -86,7 +86,7 @@ public class RepositoryFragment extends Fragment {
             }
         });
 
-        return rootView;
+        return view;
 
     }
 

@@ -44,17 +44,17 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_commits, container, false);
-        toolbar_top = (Toolbar) rootView.findViewById(R.id.toolbar_top);
+        View view = inflater.inflate(R.layout.fragment_commits, container, false);
+        toolbar_top = (Toolbar) view.findViewById(R.id.toolbar_top);
         toolbar_top.setTitle(R.string.commits);
-        commitsListView = (ListView) rootView.findViewById(R.id.commitsListView);
+        commitsListView = (ListView) view.findViewById(R.id.commitsListView);
         Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         final String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
-        pbCircle = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularCommits);
+        pbCircle = (ProgressBarCircularIndeterminate) view.findViewById(R.id.progressBarCircularCommits);
         pbCircle.setVisibility(View.VISIBLE);
 
-        //ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));
+
         apiGIT.getCommits(login, getArguments().getString(Constants.REP_NAME), new Callback<ArrayList<GHCommit>>() {
             @Override
             public void success(ArrayList<GHCommit> ghCommits, Response response) {
@@ -74,7 +74,7 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
         // ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));
 
 
-        return rootView;
+        return view;
     }
 
 
