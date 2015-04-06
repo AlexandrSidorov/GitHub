@@ -29,6 +29,19 @@ public class MainActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
+        createNavigationDrawer(toolbar);
+
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new UserFragment())
+                    .commit();
+        }
+
+
+    }
+
+    private void createNavigationDrawer(Toolbar toolbar) {
         Drawer.Result result = new Drawer()
                 .withActivity(MainActivity.this)
                 .withToolbar(toolbar)
@@ -46,22 +59,11 @@ public class MainActivity extends ActionBarActivity {
 
                         switch (drawerItem.getIdentifier()) {
                             case Constants.PROFILE: {
-                                mUserFragment = new UserFragment();
-
-                                getSupportFragmentManager().beginTransaction()
-                                        .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
-                                        .replace(R.id.container, mUserFragment)
-                                        .addToBackStack(Constants.REP_NAME)
-                                        .commit();
+                                startUserFragment();
                                 break;
                             }
                             case Constants.REPOSITORY: {
-                                mRepositoryFragment = new RepositoryFragment();
-                                getSupportFragmentManager().beginTransaction()
-                                        .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
-                                        .replace(R.id.container, mRepositoryFragment)
-                                        .addToBackStack(Constants.REP_NAME)
-                                        .commit();
+                                startRepositoryFragment();
                                 break;
                             }
 
@@ -73,15 +75,25 @@ public class MainActivity extends ActionBarActivity {
                     }
                 })
                 .build();
+    }
 
+    private void startRepositoryFragment() {
+        mRepositoryFragment = new RepositoryFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
+                .replace(R.id.container, mRepositoryFragment)
+                .addToBackStack(Constants.REP_NAME)
+                .commit();
+    }
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new UserFragment())
-                    .commit();
-        }
+    private void startUserFragment() {
+        mUserFragment = new UserFragment();
 
-
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.activity_to, R.anim.activity_from)
+                .replace(R.id.container, mUserFragment)
+                .addToBackStack(Constants.REP_NAME)
+                .commit();
     }
 
 

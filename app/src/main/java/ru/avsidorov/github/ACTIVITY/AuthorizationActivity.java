@@ -20,6 +20,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
 import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.Dialogs;
 import ru.avsidorov.github.MODELS.GHUser;
 import ru.avsidorov.github.R;
 
@@ -60,9 +61,7 @@ public class AuthorizationActivity extends ActionBarActivity {
             overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
         }
 
-        mLogin = (EditText) findViewById(R.id.loginEditText);
-        mPassword = (EditText) findViewById(R.id.loginEditView);
-        mCircleProgressBar = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+        initInterface();
         mCircleProgressBar.setVisibility(View.GONE);
 
         Button btnLogin = (Button) findViewById(R.id.loginButton);
@@ -71,47 +70,59 @@ public class AuthorizationActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCircleProgressBar.setVisibility(View.VISIBLE);
-                final String login = mLogin.getText().toString();
-                String password = mPassword.getText().toString();
+                final String login = getLogin();
+                String password = getPassword();
                 if (!login.isEmpty() && !password.isEmpty()) {
-                    final String encode = encodeCredentialsForBasicAuthorization(login, password);
-                    RestAdapter restAdapter = getRestAdapterBasicAuth(encode); //Используется Basic авторизация
-                    final ApiGIT apiGIT = restAdapter.create(ApiGIT.class);
-                    apiGIT.getUser(login, new Callback<GHUser>() {// получаем данные пользователя по логину, если пришли то все ок
-                        @Override
-                        public void success(GHUser ghUser, Response response) {
-                            Intent startIntent = new Intent(AuthorizationActivity.this,
-                                    MainActivity.class);
-                            putBase64AuthToSharePreference(getSharedPreferences(Constants.PREFERENCES, MODE_APPEND), encode);
-                            getSharedPreferences(Constants.PREFERENCES, MODE_APPEND).edit().putString(Constants.USER_NAME, login).apply();
-                            mCircleProgressBar.setVisibility(View.GONE);
-                            startActivity(startIntent);
-
-                            overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
-
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) { //выводим ошибку, в случае её появления
-                            materialDialog.title(R.string.dialog_error)
-                                    .content(error.getLocalizedMessage())
-                                    .positiveText(R.string.ok)
-                                    .show();
-                        }
-                    });
+                    getUser(login, password);
                 } else {
                     mCircleProgressBar.setVisibility(View.INVISIBLE);
-                    materialDialog
-                            .title(R.string.dialog_error)
-                            .content(R.string.dialog_content_enter_login_and_password)
-                            .positiveText(R.string.ok)
-                            .show();
+                    Dialogs.showDialogNoLogin(AuthorizationActivity.this);
 
 
                 }
             }
 
 
+        });
+    }
+
+    private void initInterface() {
+        mLogin = (EditText) findViewById(R.id.loginEditText);
+        mPassword = (EditText) findViewById(R.id.loginEditView);
+        mCircleProgressBar = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
+    }
+
+    private String getPassword() {
+        return mPassword.getText().toString();
+    }
+
+    private String getLogin() {
+        return mLogin.getText().toString();
+    }
+
+    private void getUser(final String login, String password) {
+
+        final String encode = encodeCredentialsForBasicAuthorization(login, password);
+        RestAdapter restAdapter = getRestAdapterBasicAuth(encode); //Используется Basic авторизация
+        final ApiGIT apiGIT = restAdapter.create(ApiGIT.class);
+        apiGIT.getUser(login, new Callback<GHUser>() {// получаем данные пользователя по логину, если пришли то все ок
+            @Override
+            public void success(GHUser ghUser, Response response) {
+                Intent startIntent = new Intent(AuthorizationActivity.this,
+                        MainActivity.class);
+                putBase64AuthToSharePreference(getSharedPreferences(Constants.PREFERENCES, MODE_APPEND), encode);
+                getSharedPreferences(Constants.PREFERENCES, MODE_APPEND).edit().putString(Constants.USER_NAME, login).apply();
+                mCircleProgressBar.setVisibility(View.GONE);
+                startActivity(startIntent);
+
+                overridePendingTransition(R.anim.activity_from, R.anim.activity_to);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) { //выводим ошибку, в случае её появления
+                Dialogs.showDialog(AuthorizationActivity.this, error);
+            }
         });
     }
 
