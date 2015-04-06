@@ -1,19 +1,16 @@
 package ru.avsidorov.github.ACTIVITY;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import retrofit.RetrofitError;
 import ru.avsidorov.github.Constants;
 import ru.avsidorov.github.FRAGMENTS.RepositoryFragment;
 import ru.avsidorov.github.FRAGMENTS.UserFragment;
@@ -24,20 +21,13 @@ public class MainActivity extends ActionBarActivity {
     UserFragment userFragment;
     RepositoryFragment repositoryFragment;
 
-    public static void showDialog(Activity activity, RetrofitError retrofitError) {
-        MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(activity);
-        materialDialog.title(R.string.dialog_error)
-                .content(retrofitError.getLocalizedMessage())
-                .positiveText(R.string.ok)
-                .show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(this);
+
 
         Drawer.Result result = new Drawer()
                 .withActivity(MainActivity.this)
