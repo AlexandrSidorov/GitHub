@@ -64,10 +64,7 @@ public class AuthorizationActivity extends ActionBarActivity {
         evPassword = (EditText) findViewById(R.id.loginEditView);
         pbCircle = (ProgressBarCircularIndeterminate) findViewById(R.id.progressBarCircularIndeterminate);
         pbCircle.setVisibility(View.GONE);
-        if (savedInstanceState != null) {
-            evLogin.setText(savedInstanceState.getString(Constants.LOGIN));
-            evPassword.setText(savedInstanceState.getString(Constants.PASSWORD));
-        }
+
         Button btnLogin = (Button) findViewById(R.id.loginButton);
         final MaterialDialog.Builder materialDialog = new MaterialDialog.Builder(this); //костыль какой-то, но контексты через getBaseContext() или getApplicationContext в OnClickListener не принимает
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -121,8 +118,6 @@ public class AuthorizationActivity extends ActionBarActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        outState.putString(Constants.LOGIN, evLogin.getText().toString());
-        outState.putString(Constants.PASSWORD, evPassword.getText().toString());
 
     }
 
