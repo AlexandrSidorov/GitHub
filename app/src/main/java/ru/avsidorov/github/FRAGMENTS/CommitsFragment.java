@@ -21,6 +21,7 @@ import ru.avsidorov.github.API.ApiGIT;
 import ru.avsidorov.github.Adapters.CommitsAdapter;
 import ru.avsidorov.github.Api;
 import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.Dialogs;
 import ru.avsidorov.github.MODELS.GHCommit;
 import ru.avsidorov.github.R;
 
@@ -65,7 +66,9 @@ public class CommitsFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                Dialogs.showDialog(getActivity(), error);
                 pbCircle.setVisibility(View.INVISIBLE);
+
             }
         });
         // ArrayList<GHCommit> ghCommits = apiGIT.getCommits(login,getArguments().getString(Constants.REP_NAME));

@@ -19,6 +19,7 @@ import retrofit.client.Response;
 import ru.avsidorov.github.API.ApiGIT;
 import ru.avsidorov.github.Api;
 import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.Dialogs;
 import ru.avsidorov.github.MODELS.GHUser;
 import ru.avsidorov.github.R;
 
@@ -30,6 +31,10 @@ public class UserFragment extends android.support.v4.app.Fragment {
     ImageView avatarImageView;
     TextView userName;
     TextView userEmail;
+    TextView followerCount;
+    TextView publicRepoCount;
+    TextView followingCount;
+    TextView location;
 
     ProgressBarCircularIndeterminate pbCircle;
 
@@ -44,6 +49,11 @@ public class UserFragment extends android.support.v4.app.Fragment {
         pbCircle.setVisibility(View.INVISIBLE);
         userName = (TextView) view.findViewById(R.id.userNameFrag);
         userEmail = (TextView) view.findViewById(R.id.userEmailFrag);
+        followerCount = (TextView) view.findViewById(R.id.followersCountTextView);
+        followingCount = (TextView) view.findViewById(R.id.followingCountTextView);
+        publicRepoCount = (TextView) view.findViewById(R.id.publicRepoCountTextView);
+        location = (TextView) view.findViewById(R.id.locationTextView);
+
 
         Api api = new Api();
         ApiGIT apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
@@ -54,7 +64,14 @@ public class UserFragment extends android.support.v4.app.Fragment {
             public void success(GHUser ghUser, Response response) {
                 Picasso.with(getActivity().getBaseContext()).load(ghUser.getAvatarUrl()).fit().centerInside().into(avatarImageView);
                 userName.setText(ghUser.getName());
-                userEmail.setText(ghUser.getEmail());
+                if (ghUser.getEmail().isEmpty()) {
+                    userEmail.setText(R.string.noemail);
+                } else userEmail.setText(ghUser.getEmail());
+
+                followerCount.setText(String.valueOf(ghUser.getFollowers()));
+                followingCount.setText(String.valueOf(ghUser.getFollowing()));
+                publicRepoCount.setText(String.valueOf(ghUser.getPublicRepos()));
+                location.setText(ghUser.getLocation());
                 pbCircle.setVisibility(View.INVISIBLE);
 
 
@@ -62,7 +79,8 @@ public class UserFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                Dialogs.showDialog(getActivity(), error);
+                pbCircle.setVisibility(View.INVISIBLE);
 
             }
         });

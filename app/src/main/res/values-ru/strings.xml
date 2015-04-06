@@ -16,4 +16,5 @@
     <string name="profile">Профиль</string>
     <string name="commits">Коммиты</string>
     <string name="about_fragment_usert" translatable="false">Информация</string>
+    <string name="noemail">Email не указан</string>
 </resources>

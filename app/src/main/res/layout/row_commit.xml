@@ -52,7 +52,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/authorTextView"
         android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/shaTextView"
@@ -65,6 +66,7 @@
         android:gravity="right"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/md_black_1000"
         android:textStyle="bold" />
 
 </RelativeLayout>

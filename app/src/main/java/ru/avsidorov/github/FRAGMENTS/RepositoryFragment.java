@@ -21,6 +21,7 @@ import ru.avsidorov.github.API.ApiGIT;
 import ru.avsidorov.github.Adapters.RepositoryAdapter;
 import ru.avsidorov.github.Api;
 import ru.avsidorov.github.Constants;
+import ru.avsidorov.github.Dialogs;
 import ru.avsidorov.github.MODELS.GHRepositoryFull;
 import ru.avsidorov.github.R;
 
@@ -44,15 +45,7 @@ public class RepositoryFragment extends Fragment {
         toolbar_top = (Toolbar) rootView.findViewById(R.id.toolbar_top);
         toolbar_top.setTitle(R.string.repository);
         reposListView = (ListView) rootView.findViewById(R.id.repositoryListView);
-        if (ghRepository != null || adapter != null) {
-            reposListView.setAdapter(adapter);
-            synchronized (adapter) {
-                adapter.notify();
-            }
-
-        } else {
-            ghRepository = new ArrayList<GHRepositoryFull>();
-        }
+        ghRepository = new ArrayList<GHRepositoryFull>();
         Api api = new Api();
         apiGIT = api.getRestAdapter(getActivity()).create(ApiGIT.class);
         String login = getActivity().getSharedPreferences(Constants.PREFERENCES, Activity.MODE_APPEND).getString(Constants.USER_NAME, null);
@@ -69,6 +62,7 @@ public class RepositoryFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                Dialogs.showDialog(getActivity(), error);
                 pbCircle.setVisibility(View.INVISIBLE);
             }
 
@@ -96,10 +90,5 @@ public class RepositoryFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-    }
 }
